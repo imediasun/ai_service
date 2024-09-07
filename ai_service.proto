@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package ai_service;
+
+// Добавьте эту строку для указания Go-пакета
+option go_package = "./generated";
+
+service AIService {
+    rpc AdjustTeamStrength (TeamStrengthRequest) returns (TeamStrengthResponse);
+}
+
+message Team {
+    string name = 1;
+    float strength = 2;
+}
+
+message TeamStrengthRequest {
+    repeated Team teams = 1;
+}
+
+message TeamStrengthResponse {
+    repeated Team teams = 1;
+}
