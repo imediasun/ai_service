@@ -2,33 +2,31 @@ syntax = "proto3";
 
 package ai_service;
 
-// Добавьте эту строку для указания Go-пакета
 option go_package = "github.com/imediasun/ai_service/generated";
 option php_namespace = "Generated";
 
 
-// Определение gRPC-сервиса
 service PredictionService {
     rpc GetChampionshipPredictions (TeamsRequest) returns (PredictionsResponse);
 }
 
-// Запрос, содержащий список команд
+// A request containing a list of commands
 message TeamsRequest {
     repeated Team teams = 1;
 }
 
-// Ответ с предсказаниями
+// Answer with predictions
 message PredictionsResponse {
     repeated Prediction predictions = 1;
 }
 
-// Структура команды
+// Team structure
 message Team {
     string name = 1;
     int32 points = 2;
 }
 
-// Структура предсказания
+// Structure of prediction
 message Prediction {
     string team = 1;
     string prediction = 2;

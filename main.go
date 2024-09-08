@@ -7,25 +7,25 @@ import (
     "net"
 
     "google.golang.org/grpc"
-    pb "path/to/your/proto/generated/ai_service"
+    pb "github.com/imediasun/ai_service/generated"
 )
 
 type predictionService struct {
     pb.UnimplementedPredictionServiceServer
 }
 
-// Функция для получения предсказаний
+// Function for getting predictions
 func (s *predictionService) GetChampionshipPredictions(ctx context.Context, req *pb.TeamsRequest) (*pb.PredictionsResponse, error) {
     var totalPoints int32 = 0
 
-    // Суммируем очки всех команд
+    // We sum up the points of all teams
     for _, team := range req.Teams {
         totalPoints += team.Points
     }
 
     predictions := make([]*pb.Prediction, len(req.Teams))
 
-    // Если у всех команд 0 очков, возвращаем предсказания по 0%
+    // If all teams have 0 points, we return predictions at 0%
     if totalPoints == 0 {
         for i, team := range req.Teams {
             predictions[i] = &pb.Prediction{
@@ -34,7 +34,7 @@ func (s *predictionService) GetChampionshipPredictions(ctx context.Context, req 
             }
         }
     } else {
-        // Вычисляем предсказания на основе очков каждой команды
+        // We calculate predictions based on the points of each team
         for i, team := range req.Teams {
             percentage := float64(team.Points) / float64(totalPoints) * 100
             predictions[i] = &pb.Prediction{
@@ -56,7 +56,7 @@ func main() {
     }
 
     grpcServer := grpc.NewServer()
-    pb.RegisterPredictionServiceServer(grpcServer, &server{})
+    pb.RegisterPredictionServiceServer(grpcServer, &predictionService{})
 
     log.Println("gRPC server is running on port 50051")
     if err := grpcServer.Serve(lis); err != nil {

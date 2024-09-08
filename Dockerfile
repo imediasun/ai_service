@@ -24,8 +24,9 @@ RUN rm -rf /app/generated \
 RUN ls -la /app
 
 # Генерация Go-классов для обоих .proto файлов
-RUN protoc --go_out=paths=source_relative:./generated --go-grpc_out=paths=source_relative:./generated ./ai_service.proto \
-    && protoc --go_out=paths=source_relative:./generated --go-grpc_out=paths=source_relative:./generated ./ai_service_interaction.proto
+RUN protoc --go_out=paths=source_relative:./generated --go-grpc_out=paths=source_relative:./generated ./ai_service.proto
+    #\
+    #&& protoc --go_out=paths=source_relative:./generated --go-grpc_out=paths=source_relative:./generated ./ai_service_interaction.proto
 
 
 
