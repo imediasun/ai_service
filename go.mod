@@ -1,4 +1,4 @@
-module ai_service
+module github.com/imediasun/ai_service
 
 go 1.21
 
